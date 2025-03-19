@@ -35,10 +35,14 @@ jobs:
     - name: Install Veracode CLI
       run: |
         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-        # curl -LO https://downloads.veracode.com/securityscan/veracode-cli-latest-linux-x64.tar.gz
-        # tar -xvzf veracode-cli-latest-linux-x64.tar.gz
-        # sudo mv veracode-cli /usr/local/bin/veracode-cli
-        
+        # Download the Veracode CLI package
+        #curl -LO https://downloads.veracode.com/securityscan/veracode-cli-latest-linux-x64.tar.gz
+        # Extract the downloaded file
+        tar -xvzf veracode-cli-latest-linux-x64.tar.gz
+        # Move the Veracode CLI binary to a directory in PATH
+        sudo mv veracode-cli /usr/local/bin/veracode-cli
+        # Verify the installation by running `veracode` version
+        veracode --version
 
     - name: Authenticate Veracode CLI
       run: |
