@@ -48,10 +48,10 @@ jobs:
         pwd
         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_ID }}
+        ls -la
         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
         pwd
-        cd veracode configure
-       
+        
 
     # - name: Authenticate Veracode CLI
     #   run: |
