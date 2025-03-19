@@ -29,8 +29,8 @@ jobs:
 
     - name: Push Docker Image to Docker Hub
       run: |
-        docker tag my-app:latest ${{ secrets.DOCKER_USERNAME }}/my-app:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+        docker tag test1 ${{ secrets.DOCKER_USERNAME }}/test1
+        docker push ${{ secrets.DOCKER_USERNAME }}/test1
 
     - name: Install Veracode CLI
       run: |
