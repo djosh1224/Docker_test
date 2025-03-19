@@ -21,7 +21,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t my-app .
+        docker build -t test1:latest .
 
     - name: Log in to Docker Hub
       run: |
@@ -29,8 +29,8 @@ jobs:
 
     - name: Push Docker Image to Docker Hub
       run: |
-        docker tag test1 ${{ secrets.DOCKER_USERNAME }}/test1
-        docker push ${{ secrets.DOCKER_USERNAME }}/test1
+        docker tag test1:latest ${{ secrets.DOCKER_USERNAME }}/test1:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/test1:latest
 
     - name: Install Veracode CLI
       run: |
@@ -46,4 +46,4 @@ jobs:
 
     - name: Scan Docker Image with Veracode
       run: |
-        veracode container-scan --image ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+        veracode container-scan --image ${{ secrets.DOCKER_USERNAME }}/test1:latest
