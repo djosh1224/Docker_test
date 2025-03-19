@@ -61,8 +61,8 @@ jobs:
     - name: Scan Docker Image with Veracode
       run: |   
         pwd
-        export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
-        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_ID }}
-        export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
-        export DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
+        # export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
+        # export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_ID }}
+        # export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+        # export DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
         ./veracode scan --source test1:latest --type image --format table
