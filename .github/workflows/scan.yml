@@ -48,7 +48,7 @@ jobs:
         pwd
         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_ID }}
-        ls -ltr
+        pwd
         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
         pwd
         
@@ -60,4 +60,5 @@ jobs:
     - name: Scan Docker Image with Veracode
       run: |   
         pwd
+        cd /veracode configure
         ./veracode scan --source test1:latest --type image --format table
