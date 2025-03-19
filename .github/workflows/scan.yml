@@ -34,7 +34,7 @@ jobs:
 
     - name: Install Veracode CLI
       run: |
-        #curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        # curl -fsS https://tools.veracode.com/veracode-cli/install | sh
         # Download the Veracode CLI package
         curl -LO https://downloads.veracode.com/securityscan/veracode-cli-latest-linux-x64.tar.gz
         # Extract the downloaded file
