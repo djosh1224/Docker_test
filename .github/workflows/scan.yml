@@ -1,9 +1,9 @@
 name: Container Security Scan
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   pull_request:
     branches:
       - main
@@ -23,16 +23,27 @@ jobs:
       run: |
         docker build -t my-app .
 
-    - name: Log in to Docker Hub
-      run: |
-        echo ${{ secrets.DOCKER_USERNAME }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+    # - name: Log in to Docker Hub
+    #   run: |
+    #     echo ${{ secrets.DOCKER_USERNAME }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
-    - name: Push Docker Image to Docker Hub
-      run: |
-        docker tag my-app:latest ${{ secrets.DOCKER_USERNAME }}/my-app:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+    # - name: Push Docker Image to Docker Hub
+    #   run: |
+    #     docker tag my-app:latest ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+    #     docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
 
-    - name: Scan Docker Image with Veracode
+    - name: Install Veracode CLI
       run: |
-        veracode container-scan --image ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+        curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        # curl -LO https://downloads.veracode.com/securityscan/veracode-cli-latest-linux-x64.tar.gz
+        # tar -xvzf veracode-cli-latest-linux-x64.tar.gz
+        # sudo mv veracode-cli /usr/local/bin/veracode-cli
+        
 
+    - name: Authenticate Veracode CLI
+      run: |
+        veracode config --username ${{ secrets.VERACODE_API_ID }} --password ${{ secrets.VERACODE_API_KEY }}
+
+    # - name: Scan Docker Image with Veracode
+    #   run: |
+    #     veracode container-scan --image ${{ secrets.DOCKER_USERNAME }}/my-app:latest
