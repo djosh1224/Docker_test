@@ -47,7 +47,7 @@ jobs:
         # echo "VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}" >> $GITHUB_ENV
         pwd
         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
-        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_ID }}
+        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_SECRET }}
         pwd
         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
         ./veracode scan --source test1:latest --type image --format table
