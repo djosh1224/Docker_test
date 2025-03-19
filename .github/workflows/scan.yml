@@ -56,4 +56,4 @@ jobs:
 
     - name: Scan Docker Image with Veracode
       run: |
-        ./veracode scan --source ${{ secrets.DOCKER_USERNAME }}/test1:latest --type image --format table
+        ./veracode scan --source test1:latest --type image --format table
