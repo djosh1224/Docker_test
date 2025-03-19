@@ -50,11 +50,12 @@ jobs:
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_ID }}
         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
         pwd
+        cd ./veracode configure
        
 
-    - name: Authenticate Veracode CLI
-      run: |
-        ./veracode configure --username ${{ secrets.VERACODE_API_ID }} --password ${{ secrets.VERACODE_API_KEY }}
+    # - name: Authenticate Veracode CLI
+    #   run: |
+    #     ./veracode configure --username ${{ secrets.VERACODE_API_ID }} --password ${{ secrets.VERACODE_API_KEY }}
 
     - name: Scan Docker Image with Veracode
       run: |
