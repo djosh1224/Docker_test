@@ -43,14 +43,16 @@ jobs:
         # sudo mv veracode-cli /usr/local/bin/veracode-cli
         # # Verify the installation by running `veracode` version
         # veracode --version
-        echo "VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}" >> $GITHUB_ENV
-        echo "VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}" >> $GITHUB_ENV
+        # echo "VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}" >> $GITHUB_ENV
+        # echo "VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}" >> $GITHUB_ENV
+        export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
+        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_ID }}
         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
        
 
-    - name: Authenticate Veracode CLI
-      run: |
-        veracode config --username ${{ secrets.VERACODE_API_ID }} --password ${{ secrets.VERACODE_API_KEY }}
+    # - name: Authenticate Veracode CLI
+    #   run: |
+    #     veracode config --username ${{ secrets.VERACODE_API_ID }} --password ${{ secrets.VERACODE_API_KEY }}
 
     - name: Scan Docker Image with Veracode
       run: |
