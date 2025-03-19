@@ -58,8 +58,11 @@ jobs:
     #   run: |
     #     ./veracode configure --username ${{ secrets.VERACODE_API_ID }} --password ${{ secrets.VERACODE_API_KEY }}
 
-    # - name: Scan Docker Image with Veracode
-    #   run: |   
-    #     pwd
-    #     cd /veracode configure
-    #     ./veracode scan --source test1:latest --type image --format table
+    - name: Scan Docker Image with Veracode
+      run: |   
+        pwd
+        export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
+        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_ID }}
+        export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+        export DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
+        ./veracode scan --source test1:latest --type image --format table
