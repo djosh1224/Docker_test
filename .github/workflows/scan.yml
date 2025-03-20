@@ -39,6 +39,8 @@ jobs:
         export VERACODE_API_KEY=${{ secrets.VERACODE_API_KEY }}
         pwd
         curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        ./veracode scan --source test1:latest --type image --format table
+      continue-on-error: true
        
         
 
@@ -51,7 +53,5 @@ jobs:
         pwd
         export VERACODE_API_ID=${{ secrets.VERACODE_API_ID }}
         export VERACODE_API_KEY=${{ secrets.VERACODE_API_KEY }}
-        # export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
-        # export DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
         ./veracode scan --source test1:latest --type image --format table
       continue-on-error: true
