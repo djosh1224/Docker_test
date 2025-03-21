@@ -50,8 +50,8 @@ jobs:
         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
         ./veracode scan --source prod:latest --type image --format table
-        ./veracode scan --source dev:latest --type image --format table
-        ./veracode scan --source test:latest --type image --format table
+        # ./veracode scan --source dev:latest --type image --format table
+        # ./veracode scan --source test:latest --type image --format table
       continue-on-error: true
 
     - name: Detect custom keywords and secrets in container files
@@ -61,3 +61,21 @@ jobs:
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
         ./veracode scan --source . --type directory --format table
       continue-on-error: true
+
+    - name: Detect custom keywords and secrets in container files
+      run: |
+        pwd
+        export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
+        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
+        ./veracode scan --source dev:latest --type image --format table
+      continue-on-error: true
+
+    
+    - name: Detect custom keywords and secrets in container files
+      run: |
+        pwd
+        export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
+        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
+        ./veracode scan --source test:latest --type image --format table
+      continue-on-error: true
+      
