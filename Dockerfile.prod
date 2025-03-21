@@ -1,29 +1,16 @@
 # Use CentOS as the base image
 FROM centos:8
 
-# Set environment variables (optional, for your app configuration)
-ENV APP_ENV=production
-
-# Install necessary dependencies (for example, wget and curl)
+# Install basic dependencies (for example, curl)
 RUN yum -y update && \
-    yum -y install \
-    wget \
-    curl \
-    python3 \
-    && yum clean all
+    yum -y install curl && \
+    yum clean all
 
-# Create and set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the application code into the container
-COPY . /app
+# Copy a simple file (e.g., a script) into the container
+COPY hello.sh /app/
 
-# Install Python dependencies if you have a requirements.txt
-COPY requirements.txt /app/
-RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Expose a port (adjust according to your application's needs)
-EXPOSE 8080
-
-# Set the command to run your application (example for a Python app)
-CMD ["python3", "app.py"]
+# Set the command to run the script
+CMD ["bash", "hello.sh"]
