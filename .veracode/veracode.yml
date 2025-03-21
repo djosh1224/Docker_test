@@ -1,0 +1,18 @@
+api:
+  key-id: 1*************1****
+  key-secret: c*********************************************************a
+
+container_scan:
+  secret-rules:
+    - id: test for app secrets
+      category: Passwords
+      title: App Secret
+      severity: HIGH
+      group-name: secret
+      regex: (?i)(?P<key>APP_SECRET_KEY)\s*[:=]*\s*(?P<secret>[^\s,]*)
+    - id: Test for app id
+      category: Passwords
+      title: App ID
+      severity: HIGH
+      group-name: secret
+      regex: (?i)(?P<key>APP_ID)\s*[:=]*\s*(?P<secret>[^\s,]*)
