@@ -1,0 +1,62 @@
+name: Docker Compose Build, Push, and Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Set up Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose  # Install Docker Compose if not available
+
+    - name: Log in to Docker Hub
+      run: |
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+    - name: Build Docker Images with Docker Compose
+      run: |
+        docker-compose -f docker-compose.yml build  # Build images using docker-compose
+
+    - name: Push Docker Images to Docker Hub
+      run: |
+        docker-compose -f docker-compose.yml push  # Push images to Docker Hub
+
+    - name: Install Veracode CLI
+      run: |
+        curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        export VERACODE_API_ID=${{ secrets.VERACODE_API_ID }}
+        export VERACODE_API_KEY=${{ secrets.VERACODE_API_KEY }}
+
+    - name: Scan Docker Image with Veracode
+      run: |
+        docker ps
+        docker images
+        docker info | grep "Storage Driver"
+        docker image inspect ${{ secrets.DOCKER_USERNAME }}/web-prod:latest
+        export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
+        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
+        ./veracode scan --source ${{ secrets.DOCKER_USERNAME }}/web-prod:latest --type image --format table
+      continue-on-error: true
+
+    - name: Detect custom keywords and secrets in container files
+      run: |
+        pwd
+        export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
+        export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
+        ./veracode scan --source . --type directory --format table
+      continue-on-error: true
