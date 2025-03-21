@@ -1,0 +1,45 @@
+# Start with an outdated base image (vulnerable)
+FROM ubuntu:16.04
+
+# Install unnecessary packages (increases attack surface)
+RUN apt-get update && apt-get install -y \
+    vim \
+    curl \
+    wget \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables with hardcoded secrets (misconfiguration)
+ENV APP_SECRET_KEY="supersecretvalue123" \
+    APP_ID="1234567890"
+
+# Set the user as 'root' (security risk)
+USER root
+
+# Expose unnecessary ports (exposes internal ports)
+EXPOSE 80 443 8080
+
+# Install vulnerable dependencies with known CVEs
+RUN pip install requests==2.19.1  # This version of `requests` had known vulnerabilities
+RUN pip install flask==1.0.0  # Old version of flask with potential security vulnerabilities
+
+# Copy application code with potential sensitive information
+COPY . /app
+
+# Set a weak, insecure working directory
+WORKDIR /app
+
+# Hardcoded sensitive information in the app
+RUN echo "APP_SECRET_KEY=$APP_SECRET_KEY" > secret.txt
+
+# Run the application as root (again, not recommended)
+CMD ["python", "app.py"]
+
+# Disable automatic updates and do not clean up after installation (bad practice)
+RUN apt-get install -y python3-pip && \
+    apt-get upgrade -y && \
+    apt-get autoremove -y && \
+    apt-get clean
+
+# Set weak permissions on sensitive files (potential exposure of secrets)
+RUN chmod 777 /app/secret.txt
