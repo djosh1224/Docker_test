@@ -47,10 +47,11 @@ jobs:
         docker ps
         docker images
         docker info | grep "Storage Driver"
-        docker image inspect ${{ secrets.DOCKER_USERNAME }}/web-prod:latest
         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
-        ./veracode scan --source ${{ secrets.DOCKER_USERNAME }}/web-prod:latest --type image --format table
+        ./veracode scan --source prod:latest --type image --format table
+        ./veracode scan --source dev:latest --type image --format table
+        ./veracode scan --source test:latest --type image --format table
       continue-on-error: true
 
     - name: Detect custom keywords and secrets in container files
