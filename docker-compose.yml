@@ -5,16 +5,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    image: myapp-dev
+    image: dev:latest
 
   prod:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    image: myapp-prod
+    image: prod:latest
 
   test:
     build:
       context: .
       dockerfile: Dockerfile.test
-    image: myapp-test
+    image: test:latest
