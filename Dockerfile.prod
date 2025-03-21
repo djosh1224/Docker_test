@@ -1,0 +1,34 @@
+# Start with a minimal, official base image (e.g., Python 3.9)
+FROM python:3.9-slim
+
+# Create a non-root user and group for running the application
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+
+# Set the environment variable for production (secure environment)
+ENV APP_ENV=production
+
+# Install only the necessary dependencies (no unnecessary packages)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set a working directory inside the container
+WORKDIR /app
+
+# Copy the application code and necessary files (e.g., requirements.txt)
+COPY . /app
+
+# Install Python dependencies securely
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+# Ensure proper file permissions and ownership for sensitive files
+RUN chown -R appuser:appgroup /app
+
+# Switch to the non-root user for the rest of the container lifecycle
+USER appuser
+
+# Expose only necessary ports (avoid exposing unnecessary ports)
+EXPOSE 8000
+
+# Command to run the application as a non-root user
+CMD ["python", "app.py"]
