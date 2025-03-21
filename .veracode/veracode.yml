@@ -1,6 +1,6 @@
 api:
-  key-id: ei12PS2345ty56hfngmfgbmdf
-  key-secret: eiS\wfekjsbdjbsmvbsmvbjdsbvjmsbvmsmvkqdknajcsdcowdoewjfiefjnsdjcn
+  key-id: 0e5489a34b17043ddb80e1e0fae03433
+  key-secret: 1d488b13958a8b41e6d0d076c1ff22d4d410c8937b973552a29b94c7178e8f840de10b941df40ac26f775d6f14f9dee01f65841de4c260fc406d629ba8248528
 
 container_scan:
   secret-rules:
