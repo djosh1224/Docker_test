@@ -1,36 +1,29 @@
-# Use a minimal base image for production
-FROM python:3.8-slim as base
+# Use CentOS as the base image
+FROM centos:8
 
-# Set environment variables for production (you can customize these)
-ENV APP_ID="your_app_id_here" \
-    APP_SECRET_KEY="your_app_secret_key_here" \
-    PYTHONUNBUFFERED=1  # Avoid buffering of Python output (useful for logging)
+# Set environment variables (optional, for your app configuration)
+ENV APP_ENV=production
+
+# Install necessary dependencies (for example, wget and curl)
+RUN yum -y update && \
+    yum -y install \
+    wget \
+    curl \
+    python3 \
+    && yum clean all
 
 # Create and set working directory
 WORKDIR /app
 
-# Install only necessary system dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libpq-dev  # Add any other necessary dependencies for your app
-
-# Copy only the necessary files for production (e.g., requirements.txt first)
-COPY requirements.txt /app/requirements.txt
-
-# Install Python dependencies with optimized flags for production
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
-# Copy the rest of the application code
+# Copy the application code into the container
 COPY . /app
 
-# Create a non-root user to run the application (improves security)
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+# Install Python dependencies if you have a requirements.txt
+COPY requirements.txt /app/
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Set the user to the non-root user
-USER appuser
+# Expose a port (adjust according to your application's needs)
+EXPOSE 8080
 
-# Expose the port the app will run on (customize if necessary)
-EXPOSE 8000
-
-# Set the entrypoint and command to run your application (this example assumes a Flask app)
-CMD ["python", "app.py"]
+# Set the command to run your application (example for a Python app)
+CMD ["python3", "app.py"]
