@@ -1,16 +1,8 @@
-# Use CentOS as the base image
+# Use an official CentOS base image
 FROM centos:8
 
-# Install basic dependencies (for example, curl)
-RUN yum -y update && \
-    yum -y install curl && \
-    yum clean all
-
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy a simple file (e.g., a script) into the container
-COPY hello.sh /app/
-
-# Set the command to run the script
-CMD ["bash", "hello.sh"]
+# Set the default command to print hello world
+CMD echo "Hello, Docker!"
