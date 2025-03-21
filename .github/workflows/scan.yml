@@ -55,6 +55,7 @@ jobs:
         pwd
         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
+        APP_ID: 1234567890        
         ./veracode scan --source test1:latest --type image --format table
       continue-on-error: true
 
