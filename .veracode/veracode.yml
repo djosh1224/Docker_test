@@ -9,10 +9,10 @@ container_scan:
       title: App Secret
       severity: HIGH
       group-name: secret
-      regex: (?i)(?P<key>APP_SECRET_KEY)\s*[:=]*\s*(?P<secret>[^\s,]*)
+      regex: (?i)(?P<key>VERACODE_API_KEY)\s*[:=]*\s*(?P<secret>[^\s,]*)
     - id: Test for app id
       category: Passwords
       title: App ID
       severity: HIGH
       group-name: secret
-      regex: (?i)(?P<key>APP_ID)\s*[:=]*\s*(?P<secret>[^\s,]*)
+      regex: (?i)(?P<key>VERACODE_API_ID)\s*[:=]*\s*(?P<secret>[^\s,]*)
