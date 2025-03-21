@@ -55,7 +55,8 @@ jobs:
         pwd
         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
-        export APP_ID="1234567890"       
+        export APP_ID="1234567890"   
+        export APP_SECRET_KEY="supersecretvalue123"
         ./veracode scan --source test1:latest --type image --format table
       continue-on-error: true
 
@@ -64,7 +65,7 @@ jobs:
         pwd
         export VERACODE_API_KEY_ID=${{ secrets.VERACODE_API_ID }}
         export VERACODE_API_KEY_SECRET=${{ secrets.VERACODE_API_KEY }}
-        ./veracode scan --source . --type directory --format table
+        ./veracode scan --source ./github/workflows --type directory --format table
       continue-on-error: true
 
       
