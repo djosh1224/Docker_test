@@ -1,34 +1,36 @@
-# Start with a minimal, official base image (e.g., Python 3.9)
-FROM python:3.9-slim
+# Use a minimal base image for production
+FROM python:3.8-slim as base
 
-# Create a non-root user and group for running the application
-RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+# Set environment variables for production (you can customize these)
+ENV APP_ID="your_app_id_here" \
+    APP_SECRET_KEY="your_app_secret_key_here" \
+    PYTHONUNBUFFERED=1  # Avoid buffering of Python output (useful for logging)
 
-# Set the environment variable for production (secure environment)
-ENV APP_ENV=production
-
-# Install only the necessary dependencies (no unnecessary packages)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Set a working directory inside the container
+# Create and set working directory
 WORKDIR /app
 
-# Copy the application code and necessary files (e.g., requirements.txt)
+# Install only necessary system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libpq-dev  # Add any other necessary dependencies for your app
+
+# Copy only the necessary files for production (e.g., requirements.txt first)
+COPY requirements.txt /app/requirements.txt
+
+# Install Python dependencies with optimized flags for production
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Copy the rest of the application code
 COPY . /app
 
-# Install Python dependencies securely
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+# Create a non-root user to run the application (improves security)
+RUN groupadd -r appuser && useradd -r -g appuser appuser
 
-# Ensure proper file permissions and ownership for sensitive files
-RUN chown -R appuser:appgroup /app
-
-# Switch to the non-root user for the rest of the container lifecycle
+# Set the user to the non-root user
 USER appuser
 
-# Expose only necessary ports (avoid exposing unnecessary ports)
+# Expose the port the app will run on (customize if necessary)
 EXPOSE 8000
 
-# Command to run the application as a non-root user
+# Set the entrypoint and command to run your application (this example assumes a Flask app)
 CMD ["python", "app.py"]
