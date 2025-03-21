@@ -1,6 +1,6 @@
 api:
-  key-id: 0e5489a34b17043ddb80e1e0fae03433
-  key-secret: 1d488b13958a8b41e6d0d076c1ff22d4d410c8937b973552a29b94c7178e8f840de10b941df40ac26f775d6f14f9dee01f65841de4c260fc406d629ba8248528
+  key-id: 0******************************3
+  key-secret: 1********************************************************************************************************************************8
 
 container_scan:
   secret-rules:
@@ -9,10 +9,10 @@ container_scan:
       title: App Secret
       severity: HIGH
       group-name: secret
-      regex: (?i)(?P<key>VERACODE_API_KEY)\s*[:=]*\s*(?P<secret>[^\s,]*)
+      regex: (?i)(?P<key>APP_SECRET_KEY)\s*[:=]*\s*(?P<secret>[^\s,]*)
     - id: Test for app id
       category: Passwords
       title: App ID
       severity: HIGH
       group-name: secret
-      regex: (?i)(?P<key>VERACODE_API_ID)\s*[:=]*\s*(?P<secret>[^\s,]*)
+      regex: (?i)(?P<key>APP_ID)\s*[:=]*\s*(?P<secret>[^\s,]*)
